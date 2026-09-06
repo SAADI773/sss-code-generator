@@ -463,7 +463,6 @@ const PIN_ROLES = {
 const CUSTOM_PIN = "5566";
 const DEFAULT_ROLE = "ORIENTATION VOLUNTEER";
 const DEPARTMENT_PIN = "1111";
-const DEPARTMENT_TEXT = "DEPARTMENT OF STUDENT SERVICES";
 
 
 function resolveRole(pinRaw, customRaw){
@@ -527,12 +526,14 @@ function renderCard(name, role, department){
   ctx.fillStyle = "#1a5288";
   ctx.fillText(nameText, CARD_W/2, 654);
 
-  // Department
-  const deptText = (department || DEPARTMENT_TEXT).toUpperCase();
-  const deptSize = fitFont(ctx, deptText, 700, 610, 22, 14, 2.2);
-  ctx.font = `700 ${deptSize}px Poppins, sans-serif`;
-  ctx.fillStyle = "#a28553";
-  drawSpacedText(ctx, deptText, CARD_W/2, 697, 2.2);
+  // Department (empty unless the user provides one via a PIN)
+  if (department){
+    const deptText = department.toUpperCase();
+    const deptSize = fitFont(ctx, deptText, 700, 610, 22, 14, 2.2);
+    ctx.font = `700 ${deptSize}px Poppins, sans-serif`;
+    ctx.fillStyle = "#a28553";
+    drawSpacedText(ctx, deptText, CARD_W/2, 697, 2.2);
+  }
 
   // Role / position
   const roleSize = fitFont(ctx, role, 800, 630, 25, 13, 1);
